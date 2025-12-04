@@ -1,0 +1,61 @@
+name: 'iOS OTA .NET Uploader'
+description: 'Uploads iOS IPA files to Azure Blob Storage with OTA manifest and landing page'
+author: 'Andrew Herrick'
+inputs:
+  app_name:
+    description: 'App name'
+    required: true
+  bundle_id:
+    description: 'iOS bundle identifier'
+    required: true
+  version:
+    description: 'App version'
+    required: true
+  ipa_name:
+    description: 'IPA file name (in workspace)'
+    required: true
+  ipa_path:
+    description: 'Path to IPA file (relative to workspace)'
+    required: true
+  static_url:
+    description: 'Base URL where static site is served (e.g. https://foo.z13.web.core.windows.net)'
+    required: true
+  azure_storage_account:
+    description: 'Azure Storage account name'
+    required: true
+  azure_storage_key:
+    description: 'Azure Storage account key'
+    required: true
+outputs:
+  landing_page_url:
+    description: 'URL to the landing page'
+    value: ${{ steps.upload.outputs.landing_page_url }}
+  ipa_url:
+    description: 'URL to the IPA file'
+    value: ${{ steps.upload.outputs.ipa_url }}
+  manifest_url:
+    description: 'URL to the manifest.plist'
+    value: ${{ steps.upload.outputs.manifest_url }}
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Run iOS OTA Uploader
+      id: upload
+      shell: bash
+      run: >
+        dotnet run --project "${{ github.action_path }}/src/IosOtaUploader.csproj" --
+          "${{ inputs.app_name }}"
+          "${{ inputs.bundle_id }}"
+          "${{ inputs.version }}"
+          "${{ inputs.ipa_name }}"
+          "${{ inputs.ipa_path }}"
+          "${{ inputs.static_url }}"
+          "${{ inputs.azure_storage_account }}"
+          "${{ inputs.azure_storage_key }}"
+branding:
+  icon: 'smartphone'
+  color: 'blue'
