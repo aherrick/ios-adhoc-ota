@@ -46,15 +46,15 @@ runs:
     - name: Run iOS OTA Uploader
       id: upload
       shell: bash
-      run: >
-        dotnet run --project "${{ github.action_path }}/src/IosAdHocOta.csproj" --
-          "${{ inputs.app_name }}"
-          "${{ inputs.bundle_id }}"
-          "${{ inputs.version }}"
-          "${{ inputs.ipa_name }}"
-          "${{ inputs.ipa_path }}"
-          "${{ inputs.static_url }}"
-          "${{ inputs.azure_storage_account }}"
+      run: |
+        dotnet run --project "${{ github.action_path }}/src/IosAdHocOta.csproj" -- \
+          "${{ inputs.app_name }}" \
+          "${{ inputs.bundle_id }}" \
+          "${{ inputs.version }}" \
+          "${{ inputs.ipa_name }}" \
+          "${{ inputs.ipa_path }}" \
+          "${{ inputs.static_url }}" \
+          "${{ inputs.azure_storage_account }}" \
           "${{ inputs.azure_storage_key }}"
 branding:
   icon: 'smartphone'
