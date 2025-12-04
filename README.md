@@ -1,5 +1,7 @@
 # ios-adhoc-ota
 
+[![Build](https://github.com/aherrick/ios-adhoc-ota/actions/workflows/build.yml/badge.svg)](https://github.com/aherrick/ios-adhoc-ota/actions/workflows/build.yml)
+
 A GitHub Action that uploads iOS IPA files to Azure Blob Storage with automatic OTA (Over-The-Air) installation support.
 
 > ⚠️ **Ad-Hoc Distribution:** This is for ad-hoc iOS builds, which require each test device's UUID to be registered in your provisioning profile before building. [Learn more about ad-hoc distribution](https://developer.apple.com/documentation/xcode/distributing-your-app-to-registered-devices)
